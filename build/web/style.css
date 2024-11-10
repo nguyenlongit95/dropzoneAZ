@@ -1,0 +1,65 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Sep 29, 2024, 4:56:15 PM
+    Author     : longnguyen
+*/
+
+.border-default {
+    border: 1px solid black;
+}
+.box-list-file {
+    height: auto;
+}
+.file-item i {
+    font-size: 128px;
+    color: black;
+}
+.file-item a {
+    text-decoration: none;
+} 
+.margin-top-15 {
+    margin-top: 15px;
+}
+.file-item {
+    text-align: center;
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.icon-download {
+    font-size: 36px !important;
+    position: absolute;
+    top: 45px;
+    left: 95px;
+}
+.icon-plus {
+    font-size: 36px !important;
+    position: absolute;
+    top: 50px;
+    left: 95px;
+}
+.icon-delete {
+    font-size: 24px !important;
+}
+.box-list-file {
+    margin-top: 50px;
+}
+.txt-title {
+    border-bottom: 3px dotted;
+    color: #B3B3B3;
+    margin-left: 15px;
+    width: 98%;
+}
+.chose-file {
+    display: none;
+}
+.margin-left-right-15 {
+    margin-left: 15px;
+    margin-right: 15px;   
+}
+.float-right {
+    float: right !important;
+}
