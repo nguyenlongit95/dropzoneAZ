@@ -4,11 +4,13 @@
  */
 package Controllers;
 
+import Models.Files;
 import Models.User;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -115,7 +117,9 @@ public class UploadController extends HttpServlet {
                 }
                 // Save file
                 if (fileName != null && !fileName.isEmpty()) {
-                    part.write(uploadFilePath + File.separator + fileName);
+                   part.write(uploadFilePath + File.separator + fileName);
+                   Files newFile = new Files(); 
+                   newFile.store(fileName, part.getSize(), userId);
                 }
             }
         } catch (Exception e) {
