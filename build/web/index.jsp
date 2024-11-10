@@ -194,7 +194,7 @@
                     </div>
                 </div>
                 <div class="col-md-2 file-item">
-                    <form action="DemoUploadController" method="POST" enctype="multipart/form-data" id="form-upload">
+                    <form action="UploadController" method="POST" enctype="multipart/form-data" id="form-upload">
                     <i class="fa-regular fa-file"></i>
                     <a href="#">
                         <label for="chose_file"><i class="fa-solid fa-plus icon-plus"></i></label>

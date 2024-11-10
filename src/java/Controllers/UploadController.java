@@ -5,19 +5,23 @@
 package Controllers;
 
 import Models.User;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author longnguyen
  */
+@MultipartConfig
 public class UploadController extends HttpServlet {
 
     /**
@@ -84,7 +88,36 @@ public class UploadController extends HttpServlet {
             while(rs.next()) {
                 email = rs.getString("email");
             }
-            out.print(email.substring(0, email.indexOf('@')));
+            //Init path upload
+            String pathUpload = "uploads" + File.separator + email.substring(0, email.indexOf('@'));
+            // Get path file upload
+            String applicationPath = request.getServletContext().getRealPath("");
+            // Path save to file
+            String uploadFilePath = applicationPath + pathUpload;
+            // Check folder already exit's
+            File uploadDir = new File(uploadFilePath);
+            if (!uploadDir.exists()) {
+                // Create new folders
+                uploadDir.mkdirs();
+            }
+            // Upload process
+            for (Part part : request.getParts()) {
+                // Init file name
+                String fileName = null;
+                // Check enctype upload
+                String contentDisposition = part.getHeader("content-disposition");
+                // Take file and set filename
+                if (contentDisposition != null && contentDisposition.contains("filename")) {
+                    fileName = contentDisposition.substring(
+                        contentDisposition.lastIndexOf("=") + 2,
+                        contentDisposition.length() - 1
+                    );
+                }
+                // Save file
+                if (fileName != null && !fileName.isEmpty()) {
+                    part.write(uploadFilePath + File.separator + fileName);
+                }
+            }
         } catch (Exception e) {
             response.sendRedirect("index.jsp");
             return;
