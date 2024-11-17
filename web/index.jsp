@@ -32,15 +32,21 @@
         }
         int userId = (int) session.getAttribute("user_id");
         User user = new User();
+        ResultSet userInfor = user.findById(userId);
         // Get my file
         myFiles = user.myFile(userId);
+        int i = 0;
         while (myFiles.next()) {
             totalFile = myFiles.getInt("total_file");
             totalSize = myFiles.getLong("total_size");
             totalDownload = myFiles.getInt("total_download");
             purchaseStatus = myFiles.getInt("purchase_status");
+            i++;
             break;
         }
+        ResultSet fileList;
+        // Get a fresh ResultSet for file listing
+        fileList = user.myFile(userId);
         %>
     </p>
     <div class="container">
@@ -50,7 +56,7 @@
                     <h2>ここで画像フォルダを選択してください。</h2>
                 </div>
                 <%
-                while (myFiles.next()) {
+                while(fileList.next()) {
                 %>
                 <div class="col-md-2 file-item">
                     <i class="fa-regular fa-file"></i>
