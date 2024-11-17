@@ -29,8 +29,9 @@
         ResultSet myFiles;
         if (session.getAttribute("user_id") == null) {
             response.sendRedirect("Login.jsp");
+            return;
         }
-        int userId = (int) session.getAttribute("user_id");
+        int userId = Integer.parseInt(session.getAttribute("user_id").toString());;
         User user = new User();
         ResultSet userInfor = user.findById(userId);
         // Get my file
@@ -60,18 +61,18 @@
                 %>
                 <div class="col-md-2 file-item">
                     <i class="fa-regular fa-file"></i>
-                    <a href="/download-file?file-id=<%=myFiles.getInt("id")%>">
+                    <a href="/download-file?file-id=<%=fileList.getInt("id")%>">
                         <i class="fa-solid fa-download icon-download"></i>
                     </a>
                     <div class="col-md-12 margin-top-15">
                         <div class="row">
                             <div class="col-md-9">
-                                <a href="/download-file?file-id=<%=myFiles.getInt("id")%>">
-                                    <%=myFiles.getString("file_name")%>
+                                <a href="/download-file?file-id=<%=fileList.getInt("id")%>">
+                                    <%=fileList.getString("file_name")%>
                                 </a>
                             </div>
                             <div class="col-md-3">| 
-                                <a href="/delete-file?file-id=<%=myFiles.getInt("id")%>"><i class="fa-solid fa-trash icon-delete"></i></a>
+                                <a href="/delete-file?file-id=<%=fileList.getInt("id")%>"><i class="fa-solid fa-trash icon-delete"></i></a>
                             </div>
                         </div>
                     </div>
