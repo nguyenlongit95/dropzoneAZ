@@ -22,8 +22,24 @@
     <h1>ユーザーのプロフィール画像を一括で取り込みます。</h1>
     <p>
         <% 
+        int totalFile = 0;
+        long totalSize = 0;
+        int totalDownload = 0;
+        int purchaseStatus = 0;
+        ResultSet myFiles;
         if (session.getAttribute("user_id") == null) {
             response.sendRedirect("Login.jsp");
+        }
+        int userId = (int) session.getAttribute("user_id");
+        User user = new User();
+        // Get my file
+        myFiles = user.myFile(userId);
+        while (myFiles.next()) {
+            totalFile = myFiles.getInt("total_file");
+            totalSize = myFiles.getLong("total_size");
+            totalDownload = myFiles.getInt("total_download");
+            purchaseStatus = myFiles.getInt("purchase_status");
+            break;
         }
         %>
     </p>
@@ -33,166 +49,28 @@
                 <div class="col-md-12 txt-title">
                     <h2>ここで画像フォルダを選択してください。</h2>
                 </div>
+                <%
+                while (myFiles.next()) {
+                %>
                 <div class="col-md-2 file-item">
                     <i class="fa-regular fa-file"></i>
-                    <a href="#">
+                    <a href="/download-file?file-id=<%=myFiles.getInt("id")%>">
                         <i class="fa-solid fa-download icon-download"></i>
                     </a>
                     <div class="col-md-12 margin-top-15">
                         <div class="row">
                             <div class="col-md-9">
-                                <a href="#">FileName1.zip</a>
+                                <a href="/download-file?file-id=<%=myFiles.getInt("id")%>">
+                                    <%=myFiles.getString("file_name")%>
+                                </a>
                             </div>
                             <div class="col-md-3">| 
-                                <a href="#"><i class="fa-solid fa-trash icon-delete"></i></a>
+                                <a href="/delete-file?file-id=<%=myFiles.getInt("id")%>"><i class="fa-solid fa-trash icon-delete"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2 file-item">
-                    <i class="fa-regular fa-file"></i>
-                    <a href="#">
-                        <i class="fa-solid fa-download icon-download"></i>
-                    </a>
-                    <div class="col-md-12 margin-top-15">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <a href="#">FileName1.zip</a>
-                            </div>
-                            <div class="col-md-3">| 
-                                <a href="#"><i class="fa-solid fa-trash icon-delete"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 file-item">
-                    <i class="fa-regular fa-file"></i>
-                    <a href="#">
-                        <i class="fa-solid fa-download icon-download"></i>
-                    </a>
-                    <div class="col-md-12 margin-top-15">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <a href="#">FileName1.zip</a>
-                            </div>
-                            <div class="col-md-3">| 
-                                <a href="#"><i class="fa-solid fa-trash icon-delete"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 file-item">
-                    <i class="fa-regular fa-file"></i>
-                    <a href="#">
-                        <i class="fa-solid fa-download icon-download"></i>
-                    </a>
-                    <div class="col-md-12 margin-top-15">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <a href="#">FileName1.zip</a>
-                            </div>
-                            <div class="col-md-3">| 
-                                <a href="#"><i class="fa-solid fa-trash icon-delete"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 file-item">
-                    <i class="fa-regular fa-file"></i>
-                    <a href="#">
-                        <i class="fa-solid fa-download icon-download"></i>
-                    </a>
-                    <div class="col-md-12 margin-top-15">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <a href="#">FileName1.zip</a>
-                            </div>
-                            <div class="col-md-3">| 
-                                <a href="#"><i class="fa-solid fa-trash icon-delete"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 file-item">
-                    <i class="fa-regular fa-file"></i>
-                    <a href="#">
-                        <i class="fa-solid fa-download icon-download"></i>
-                    </a>
-                    <div class="col-md-12 margin-top-15">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <a href="#">FileName1.zip</a>
-                            </div>
-                            <div class="col-md-3">| 
-                                <a href="#"><i class="fa-solid fa-trash icon-delete"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 file-item">
-                    <i class="fa-regular fa-file"></i>
-                    <a href="#">
-                        <i class="fa-solid fa-download icon-download"></i>
-                    </a>
-                    <div class="col-md-12 margin-top-15">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <a href="#">FileName1.zip</a>
-                            </div>
-                            <div class="col-md-3">| 
-                                <a href="#"><i class="fa-solid fa-trash icon-delete"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 file-item">
-                    <i class="fa-regular fa-file"></i>
-                    <a href="#">
-                        <i class="fa-solid fa-download icon-download"></i>
-                    </a>
-                    <div class="col-md-12 margin-top-15">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <a href="#">FileName1.zip</a>
-                            </div>
-                            <div class="col-md-3">| 
-                                <a href="#"><i class="fa-solid fa-trash icon-delete"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 file-item">
-                    <i class="fa-regular fa-file"></i>
-                    <a href="#">
-                        <i class="fa-solid fa-download icon-download"></i>
-                    </a>
-                    <div class="col-md-12 margin-top-15">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <a href="#">FileName1.zip</a>
-                            </div>
-                            <div class="col-md-3">| 
-                                <a href="#"><i class="fa-solid fa-trash icon-delete"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 file-item">
-                    <i class="fa-regular fa-file"></i>
-                    <a href="#">
-                        <i class="fa-solid fa-download icon-download"></i>
-                    </a>
-                    <div class="col-md-12 margin-top-15">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <a href="#">FileName1.zip</a>
-                            </div>
-                            <div class="col-md-3">| 
-                                <a href="#"><i class="fa-solid fa-trash icon-delete"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <%}%>
                 <div class="col-md-2 file-item">
                     <form action="UploadController" method="POST" enctype="multipart/form-data" id="form-upload">
                     <i class="fa-regular fa-file"></i>
@@ -206,13 +84,13 @@
             <div class="col-md-12 margin-left-right-15">
                 <div class="row">
                     <div class="col-md-4 border-default">
-                        <p>合計ファイル: <span>58/100</span></p>
+                        <p>合計ファイル: <span><%=totalFile%><%if(purchaseStatus == 0) {%> /100 <%}%></span></p>
                     </div>
                     <div class="col-md-4 border-default">
-                        <p>ダンジョンの攻略Kb: <span>1024000</span></p>
+                        <p>ダンジョンの攻略Kb: <span><%=totalSize%></span></p>
                     </div>
                     <div class="col-md-4 border-default" style="width: 31.1%">
-                        <p>ソランタイ: <span>9/100</span></p>
+                        <p>ソランタイ: <span><%=totalDownload%><%if(purchaseStatus == 0) {%> /100 <%}%></span></p>
                     </div>
                 </div>
             </div>

@@ -85,10 +85,14 @@ public class UploadController extends HttpServlet {
         User user = new User();
         ResultSet rs = user.findById(userId);
         String email = "";
+        int totalFile = 0;
+        long totalSize = 0;
         PrintWriter out = response.getWriter();
         try {
             while(rs.next()) {
                 email = rs.getString("email");
+                totalFile = rs.getInt("total_file") + 1;
+                totalSize = rs.getLong("total_size");
             }
             //Init path upload
             String pathUpload = "uploads" + File.separator + email.substring(0, email.indexOf('@'));
@@ -117,9 +121,24 @@ public class UploadController extends HttpServlet {
                 }
                 // Save file
                 if (fileName != null && !fileName.isEmpty()) {
-                   part.write(uploadFilePath + File.separator + fileName);
-                   Files newFile = new Files(); 
-                   newFile.store(fileName, part.getSize(), userId);
+                    // Check file name
+                    Files newFile = new Files(); 
+                    // Remove ext in file
+                    String newName = fileName.substring(0, fileName.lastIndexOf("."));
+                    ResultSet countFile = newFile.countFile(newName);
+                    int count = 0;
+                    while (countFile.next()) {
+                        count++;
+                    }
+                    if (count > 0) {
+                        // Generate new name
+                        fileName = newName + "(" + count + ").zip";
+                    }
+                    part.write(uploadFilePath + File.separator + fileName);
+                    newFile.store(fileName, part.getSize(), userId);
+                    totalSize = totalSize + part.getSize();
+                    user.updateAfterUpload(totalFile, totalSize, userId);
+                    response.sendRedirect("index.jsp");
                 }
             }
         } catch (Exception e) {

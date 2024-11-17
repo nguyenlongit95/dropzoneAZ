@@ -7,6 +7,7 @@ package Models;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
+import java.sql.ResultSet;
 
 /**
  *
@@ -39,6 +40,20 @@ public class Files {
             e.printStackTrace();
             System.out.println("System error!");
             return false;
+        }
+    }
+    
+    public ResultSet countFile(String fileName) {
+        String sql = "SELECT * FROM files WHERE file_name LIKE '" + fileName + "%'";
+        PreparedStatement ps;
+        try {
+            ps = this.connect.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("System error!");
+            return null;
         }
     }
 }
