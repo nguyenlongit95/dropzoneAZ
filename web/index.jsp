@@ -45,6 +45,14 @@
             i++;
             break;
         }
+        boolean canUpload = false;
+        if (purchaseStatus == 1) {
+            canUpload = true;
+        } else {
+            if (totalFile <= 100) {
+                canUpload = true;
+            }
+        }
         ResultSet fileList;
         // Get a fresh ResultSet for file listing
         fileList = user.myFile(userId);
@@ -61,7 +69,7 @@
                 %>
                 <div class="col-md-2 file-item">
                     <i class="fa-regular fa-file"></i>
-                    <a href="/download-file?file-id=<%=fileList.getInt("id")%>">
+                    <a href="download-file?file-id=<%=fileList.getInt("id")%>">
                         <i class="fa-solid fa-download icon-download"></i>
                     </a>
                     <div class="col-md-12 margin-top-15">
